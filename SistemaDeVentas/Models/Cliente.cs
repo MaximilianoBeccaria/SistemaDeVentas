@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaVentasDatos.Modelos
+namespace SistemaDeVentas.Models
 {
     public class Cliente
     {

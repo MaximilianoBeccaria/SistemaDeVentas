@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 
-namespace SistemaVentasDatos.Modelos
+namespace SistemaDeVentas.Models
 {
     public class Producto
     {
-        public int IdProducto { get; set; }
+        [Key]
+        public int ProductoId { get; set; }
         public string Nombre { get; set; }
         public string SKU { get; set; }
         public decimal Precio { get; set; }

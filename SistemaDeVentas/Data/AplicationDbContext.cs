@@ -1,17 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SistemaVentasDatos.Modelos;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SistemaDeVentas.Models;
 
-namespace SistemaVentasDatos.Datos
+
+
+namespace SistemaDeVentas.Data
 {
-    public class VentasContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-
-        public VentasContext(DbContextOptions<VentasContext> options) : base(options) { }
-        public DbSet<Producto> Productos { get; set; }
-        public DbSet<Proveedor> Proveedores { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Orden> Ordenes { get; set; }
-        public DbSet<DetalleOrden> DetallesOrden { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<DetalleOrden> DetalleOrden { get; set; }
+        public DbSet<Orden> Orden { get; set; }
+        public DbSet<Producto> Producto { get; set; }
+        public DbSet<Proveedor> Proveedor { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -21,5 +26,17 @@ namespace SistemaVentasDatos.Datos
             );
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DetalleOrden>()
+                //.HasKey(d => new { d.OrdenId, d.ProductoId });
+                .HasNoKey();
+        }
+
+
+
+
+
     }
 }
+
