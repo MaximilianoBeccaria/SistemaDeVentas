@@ -22,9 +22,11 @@ namespace SistemaDeVentas.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                "Server=(localdb)\\MSSQLLocalDB;Database=Grupo10;Trusted_Connection=True;TrustServerCertificate=True;"
+                "Server=LAPTOP-J7C6C098\\SQLEXPRESS;Database=Grupo10;Trusted_Connection=True;TrustServerCertificate=True;"
             );
         }
+       
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
