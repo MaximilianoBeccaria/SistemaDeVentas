@@ -13,7 +13,10 @@ namespace SistemaDeVentas.Models
         public int ProveedorId { get; set; }
         public string Nombre { get; set; }
         public string Contacto { get; set; }
+        public string Direccion { get; set; }
 
-        public List<Producto> Productos { get; set; }
+        public ICollection<Producto> Productos { get; set; }
+
+
     }
 }

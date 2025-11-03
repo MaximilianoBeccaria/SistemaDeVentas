@@ -23,5 +23,7 @@ namespace SistemaDeVentas.Models
         public Proveedor Proveedor { get; set; }
 
         public List<DetalleOrden> DetallesOrden { get; set; }
+
+
     }
 }

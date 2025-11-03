@@ -12,6 +12,7 @@ namespace SistemaDeVentas.Models
         [Key]
         public int IdCliente { get; set; }
         public string NombreCompleto { get; set; }
+        public string Dni { get; set; }
         public string Email { get; set; }
         public string Telefono { get; set; }
         public List<Orden> Ordenes { get; set; }
