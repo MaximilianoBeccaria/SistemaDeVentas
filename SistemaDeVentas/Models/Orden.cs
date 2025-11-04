@@ -12,12 +12,16 @@ namespace SistemaDeVentas.Models
         [Key]
         public int OrdenId { get; set; }
         public DateTime Fecha { get; set; }
-        public decimal Total { get; set; }
+        public int IdCliente { get; set; }
         public string Estado { get; set; }
 
-        public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
-
-        public List<DetalleOrden> Detalles { get; set; }
+        public List<DetalleOrden> DetallesOrden { get; set; } = new();
     }
+
 }
+
+
+
+
+

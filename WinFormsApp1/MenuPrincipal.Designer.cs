@@ -32,6 +32,7 @@
             label1 = new Label();
             btnClientes = new Button();
             btnProveedor = new Button();
+            btnDetalleOrden = new Button();
             SuspendLayout();
             // 
             // BtnProductos
@@ -74,11 +75,22 @@
             btnProveedor.UseVisualStyleBackColor = true;
             btnProveedor.Click += btnProveedor_Click;
             // 
+            // btnDetalleOrden
+            // 
+            btnDetalleOrden.Location = new Point(187, 315);
+            btnDetalleOrden.Name = "btnDetalleOrden";
+            btnDetalleOrden.Size = new Size(413, 50);
+            btnDetalleOrden.TabIndex = 4;
+            btnDetalleOrden.Text = "Detalle de orden";
+            btnDetalleOrden.UseVisualStyleBackColor = true;
+            btnDetalleOrden.Click += btnDetalleOrden_Click;
+            // 
             // MenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnDetalleOrden);
             Controls.Add(btnProveedor);
             Controls.Add(btnClientes);
             Controls.Add(label1);
@@ -95,5 +107,6 @@
         private Label label1;
         private Button btnClientes;
         private Button btnProveedor;
+        private Button btnDetalleOrden;
     }
 }

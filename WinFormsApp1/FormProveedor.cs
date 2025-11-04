@@ -12,34 +12,22 @@ namespace WinFormsApp1
     public partial class FormProveedor : Form
     {
         private readonly ApplicationDbContext _context;
-
         public FormProveedor()
         {
             InitializeComponent();
             _context = new ApplicationDbContext();
-
         }
+
+
 
 
         private void FormProveedores_Load(object sender, EventArgs e)
         {
-            CargarProveedores();
         }
 
         private void CargarProveedores()
         {
-            dgvProveedores.DataSource = _context.Proveedor
-                .Select(p => new
-                {
-                    p.ProveedorId,
-                    p.Nombre,
-                    p.Contacto,
-                    p.Direccion
-
-                })
-                .ToList();
-
-          
+            dgvProveedores.DataSource = _context.Proveedor.ToList();
         }
 
 
@@ -63,24 +51,47 @@ namespace WinFormsApp1
             var menu = new MenuPrincipal();
             menu.Show();
             this.Close();
+        }  //Ir al Menu
 
-        }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+           
             if (string.IsNullOrWhiteSpace(NombreProveedor.Text) ||
-               string.IsNullOrWhiteSpace(ContactoProveedor.Text) ||
-               string.IsNullOrWhiteSpace(DireccionProveedor.Text))
+                string.IsNullOrWhiteSpace(ContactoProveedor.Text) ||
+                string.IsNullOrWhiteSpace(DireccionProveedor.Text))
             {
                 MessageBox.Show("Completá todos los campos.");
                 return;
-
             }
+
+            
+            if (NombreProveedor.Text.Any(char.IsDigit))
+            {
+                MessageBox.Show("El nombre del proveedor no debe contener números.");
+                return;
+            }
+
+            
+            if (!ContactoProveedor.Text.All(char.IsDigit))
+            {
+                MessageBox.Show("El contacto debe contener solo números.");
+                return;
+            }
+
+            
+            if (DireccionProveedor.Text.Length < 5)
+            {
+                MessageBox.Show("La dirección debe tener al menos 5 caracteres.");
+                return;
+            }
+
+           
             var proveedor = new Proveedor
             {
-                Nombre = NombreProveedor.Text,
-                Contacto = ContactoProveedor.Text,
-                Direccion = DireccionProveedor.Text
+                Nombre = NombreProveedor.Text.Trim(),
+                Contacto = ContactoProveedor.Text.Trim(),
+                Direccion = DireccionProveedor.Text.Trim()
             };
 
             _context.Proveedor.Add(proveedor);
@@ -91,6 +102,8 @@ namespace WinFormsApp1
             MessageBox.Show("Proveedor agregado correctamente.");
         }
 
+
+
         private void ModificarProveedores_Click(object sender, EventArgs e)
         {
             if (dgvProveedores.CurrentRow == null)
@@ -99,9 +112,12 @@ namespace WinFormsApp1
                 return;
             }
 
-            int ProveedorId = (int)dgvProveedores.CurrentRow.Cells["ProveedorId"].Value;
-            var proveedor = _context.Proveedor.Find(ProveedorId);
-            if (proveedor == null) return;
+            var proveedor = dgvProveedores.CurrentRow.DataBoundItem as Proveedor;
+            if (proveedor == null)
+            {
+                MessageBox.Show("No se pudo obtener el proveedor.");
+                return;
+            }
 
             proveedor.Nombre = NombreProveedor.Text;
             proveedor.Contacto = ContactoProveedor.Text;
@@ -113,22 +129,30 @@ namespace WinFormsApp1
             MessageBox.Show("Proveedor modificado correctamente.");
         }
 
+
         private void EliminarProveedores_Click(object sender, EventArgs e)
         {
             try
             {
-                if (dgvProveedores.CurrentRow == null) return;
+                if (dgvProveedores.CurrentRow == null)
+                {
+                    MessageBox.Show("Seleccioná un proveedor.");
+                    return;
+                }
 
-                int proveedorId = (int)dgvProveedores.CurrentRow.Cells["ProveedorId"].Value;
-                var proveedor = _context.Proveedor.Find(proveedorId);
-                if (proveedor == null) return;
+                var proveedor = dgvProveedores.CurrentRow.DataBoundItem as Proveedor;
+                if (proveedor == null)
+                {
+                    MessageBox.Show("No se pudo obtener el proveedor seleccionado.");
+                    return;
+                }
 
                 _context.Proveedor.Remove(proveedor);
                 _context.SaveChanges();
 
                 CargarProveedores();
                 LimpiarCampos();
-                MessageBox.Show("Proveedor eliminado.");
+                MessageBox.Show("Proveedor eliminado correctamente.");
             }
             catch (Exception ex)
             {
@@ -137,26 +161,40 @@ namespace WinFormsApp1
         }
 
 
-            
-        
+
+
+
 
 
         private void dgvProveedores_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            if (dgvProveedores.CurrentRow != null)
+            {
+                NombreProveedor.Text = dgvProveedores.CurrentRow.Cells["Nombre"].Value.ToString();
+                ContactoProveedor.Text = dgvProveedores.CurrentRow.Cells["Contacto"].Value.ToString();
+                DireccionProveedor.Text = dgvProveedores.CurrentRow.Cells["Direccion"].Value.ToString();
+            }
         }
 
         private void FormProveedor_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void FormProveedor_Load_1(object sender, EventArgs e)
         {
             CargarProveedores();
         }
+
+        private void dgvProveedores_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+          
+            }
+        }
+
     }
-}
+
+
 
 
 //SOLUCIONAR ERROR DE ELIMINAR PROVEEDOR Y DE MODIFICAR

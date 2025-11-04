@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaDeVentas.Data;
 
@@ -11,9 +12,11 @@ using SistemaDeVentas.Data;
 namespace SistemaDeVentas.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251104211943_VersionDetalleOrdenActualizada")]
+    partial class VersionDetalleOrdenActualizada
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,7 +56,7 @@ namespace SistemaDeVentas.Migrations
 
             modelBuilder.Entity("SistemaDeVentas.Models.DetalleOrden", b =>
                 {
-                    b.Property<int>("DetalleOrdenId")
+                    b.Property<int>("DetalleId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductoId")
@@ -66,22 +69,12 @@ namespace SistemaDeVentas.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrdenId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductoId1")
-                        .HasColumnType("int");
-
-                    b.HasKey("DetalleOrdenId", "ProductoId");
-
-                    b.HasIndex("OrdenId");
+                    b.HasKey("DetalleId", "ProductoId");
 
                     b.HasIndex("ProductoId");
-
-                    b.HasIndex("ProductoId1");
 
                     b.ToTable("DetalleOrden");
                 });
@@ -94,7 +87,7 @@ namespace SistemaDeVentas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrdenId"));
 
-                    b.Property<int>("ClienteIdCliente")
+                    b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
                     b.Property<string>("Estado")
@@ -104,12 +97,9 @@ namespace SistemaDeVentas.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdCliente")
-                        .HasColumnType("int");
-
                     b.HasKey("OrdenId");
 
-                    b.HasIndex("ClienteIdCliente");
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("Orden");
                 });
@@ -182,13 +172,7 @@ namespace SistemaDeVentas.Migrations
                 {
                     b.HasOne("SistemaDeVentas.Models.Orden", null)
                         .WithMany("DetallesOrden")
-                        .HasForeignKey("DetalleOrdenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SistemaDeVentas.Models.Orden", "Orden")
-                        .WithMany()
-                        .HasForeignKey("OrdenId")
+                        .HasForeignKey("DetalleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -197,23 +181,13 @@ namespace SistemaDeVentas.Migrations
                         .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SistemaDeVentas.Models.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Orden");
-
-                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("SistemaDeVentas.Models.Orden", b =>
                 {
                     b.HasOne("SistemaDeVentas.Models.Cliente", "Cliente")
                         .WithMany("Ordenes")
-                        .HasForeignKey("ClienteIdCliente")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

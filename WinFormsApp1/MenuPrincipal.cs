@@ -38,6 +38,13 @@ namespace WinFormsApp1
             form.ShowDialog();
             this.Hide();
         }
+
+        private void btnDetalleOrden_Click(object sender, EventArgs e)
+        {
+            FormVentas form = new FormVentas();
+            form.ShowDialog();
+            this.Hide();
+        }
     }
 
 

@@ -88,12 +88,14 @@
             dgvProveedores.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProveedores.Columns.AddRange(new DataGridViewColumn[] { proveedorIdDataGridViewTextBoxColumn, nombreDataGridViewTextBoxColumn, contactoDataGridViewTextBoxColumn, direccionDataGridViewTextBoxColumn });
             dgvProveedores.DataSource = proveedorBindingSource;
+            dgvProveedores.GridColor = SystemColors.WindowText;
             dgvProveedores.Location = new Point(103, 253);
             dgvProveedores.Name = "dgvProveedores";
             dgvProveedores.RowHeadersWidth = 51;
             dgvProveedores.Size = new Size(553, 188);
             dgvProveedores.TabIndex = 5;
-            dgvProveedores.CellContentClick += dgvProveedores_CellContentClick;
+            dgvProveedores.CellClick += dgvProveedores_CellContentClick;
+            dgvProveedores.CellContentClick += dgvProveedores_CellContentClick_1;
             // 
             // proveedorIdDataGridViewTextBoxColumn
             // 

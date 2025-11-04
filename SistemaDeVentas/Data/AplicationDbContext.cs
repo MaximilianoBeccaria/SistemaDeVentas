@@ -32,12 +32,12 @@ namespace SistemaDeVentas.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DetalleOrden>()
-                .HasKey(d => new { d.OrdenId, d.ProductoId });
+                .HasKey(d => new { d.DetalleOrdenId, d.ProductoId });
 
             modelBuilder.Entity<Orden>()
-                .HasMany(o => o.Detalles)
+                .HasMany(o => o.DetallesOrden)
                 .WithOne()
-                .HasForeignKey(d => d.OrdenId);
+                .HasForeignKey(d => d.DetalleOrdenId);
 
             modelBuilder.Entity<Producto>()
                 .HasMany(p => p.DetallesOrden)

@@ -99,6 +99,7 @@ namespace WinFormsApp1
         {
             try
             {
+                // Validar campos vacíos
                 if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
                     string.IsNullOrWhiteSpace(txtCategoria.Text) ||
                     string.IsNullOrWhiteSpace(txtPrecio.Text) ||
@@ -109,34 +110,52 @@ namespace WinFormsApp1
                     return;
                 }
 
-                if (!decimal.TryParse(txtPrecio.Text, out decimal precio))
+               
+                if (txtNombre.Text.Any(char.IsDigit))  // Validar que el nombre no contenga números
                 {
-                    MessageBox.Show("Ingresá un valor válido para el precio.");
+                    MessageBox.Show("El nombre del producto no debe contener números.");
                     return;
                 }
 
-                if (!int.TryParse(txtStock.Text, out int stock))
+                
+                if (txtCategoria.Text.Any(char.IsDigit))// Validar que la categoría no contenga números
                 {
-                    MessageBox.Show("Ingresá un valor válido para el stock.");
+                    MessageBox.Show("La categoría no debe contener números.");
                     return;
                 }
 
-                var proveedor = _context.Proveedor.FirstOrDefault();
-                if (proveedor == null)
+               
+                if (!decimal.TryParse(txtPrecio.Text, out decimal precio) || precio <= 0) // Validar precio decimal positivo
                 {
-                    MessageBox.Show("No hay proveedores registrados. Primero agregá uno.");
+                    MessageBox.Show("Ingresá un precio válido y mayor a cero.");
                     return;
                 }
+
+             
+                if (!int.TryParse(txtStock.Text, out int stock) || stock < 0)   // Validar stock entero positivo
+                {
+                    MessageBox.Show("Ingresá un stock válido (número entero positivo).");
+                    return;
+                }
+
+                
+                if (SKUProducto.Text.Length < 4 || !SKUProducto.Text.All(char.IsLetterOrDigit)) // Validar formato de SKU 
+                {
+                    MessageBox.Show("El SKU debe tener al menos 4 caracteres alfanuméricos.");
+                    return;
+                }
+
 
                 var producto = new Producto
                 {
-                    Nombre = txtNombre.Text,
-                    Categoria = txtCategoria.Text,
+                    Nombre = txtNombre.Text.Trim(),
+                    Categoria = txtCategoria.Text.Trim(),
                     Precio = precio,
                     Stock = stock,
-                    SKU = SKUProducto.Text,
-                    ProveedorId = proveedor.ProveedorId
+                    SKU = SKUProducto.Text.Trim(),
+                    ProveedorId = (int)cmbProveedores.SelectedValue
                 };
+
 
                 _context.Producto.Add(producto);
                 _context.SaveChanges();
@@ -149,8 +168,8 @@ namespace WinFormsApp1
             {
                 MessageBox.Show("Error al agregar producto: " + (ex.InnerException?.Message ?? ex.Message));
             }
-
         }
+
 
         private void btnListar_Click(object sender, EventArgs e)
         {
@@ -220,7 +239,7 @@ namespace WinFormsApp1
         {
             if (dgvProductos.CurrentRow != null)
             {
-                txtNombre.Text = dgvProductos.CurrentRow.Cells["Nombre"].Value.ToString();
+
                 txtCategoria.Text = dgvProductos.CurrentRow.Cells["Categoria"].Value.ToString();
                 txtPrecio.Text = dgvProductos.CurrentRow.Cells["Precio"].Value.ToString();
                 txtStock.Text = dgvProductos.CurrentRow.Cells["Stock"].Value.ToString();
@@ -250,9 +269,22 @@ namespace WinFormsApp1
         {
 
 
-
             CargarProductos();
+
+            var proveedores = _context.Proveedor
+       .Select(p => new
+       {
+           p.ProveedorId,
+           p.Nombre
+       })
+       .ToList();
+
+            cmbProveedores.DataSource = proveedores;
+            cmbProveedores.DisplayMember = "Nombre";       
+            cmbProveedores.ValueMember = "ProveedorId";   
         }
+
+        
 
 
         private void label6_Click(object sender, EventArgs e)
