@@ -10,7 +10,7 @@ namespace SistemaDeVentas.Models
 {
     public class DetalleOrden
     {
-
+        [Key]
         public int DetalleOrdenId { get; set; }
         public int OrdenId { get; set; }
         public int ProductoId { get; set; }
@@ -18,8 +18,7 @@ namespace SistemaDeVentas.Models
         public decimal PrecioUnitario { get; set; }
         public string Nombre { get; set; }
 
-        public Producto Producto { get; set; }
-        public Orden Orden { get; set; }
+        
 
         [NotMapped]
         public decimal Subtotal => Cantidad * PrecioUnitario;

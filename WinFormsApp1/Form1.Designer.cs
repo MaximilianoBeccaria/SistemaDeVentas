@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -53,7 +54,18 @@
             label7 = new Label();
             cmbProveedores = new ComboBox();
             label8 = new Label();
+            productoBindingSource = new BindingSource(components);
+            productoIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            nombreDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            sKUDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            precioDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            costoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            stockDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            categoriaDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            proveedorIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            proveedorDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)productoBindingSource).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -196,8 +208,10 @@
             // 
             // dgvProductos
             // 
+            dgvProductos.AutoGenerateColumns = false;
             dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { colId, colNombre, colCategoria, colPrecio, colStock });
+            dgvProductos.Columns.AddRange(new DataGridViewColumn[] { colId, colNombre, colCategoria, colPrecio, colStock, productoIdDataGridViewTextBoxColumn, nombreDataGridViewTextBoxColumn, sKUDataGridViewTextBoxColumn, precioDataGridViewTextBoxColumn, costoDataGridViewTextBoxColumn, stockDataGridViewTextBoxColumn, categoriaDataGridViewTextBoxColumn, proveedorIdDataGridViewTextBoxColumn, proveedorDataGridViewTextBoxColumn });
+            dgvProductos.DataSource = productoBindingSource;
             dgvProductos.Location = new Point(90, 413);
             dgvProductos.Margin = new Padding(3, 4, 3, 4);
             dgvProductos.Name = "dgvProductos";
@@ -304,6 +318,82 @@
             label8.TabIndex = 19;
             label8.Text = "Proveedor";
             // 
+            // productoBindingSource
+            // 
+            productoBindingSource.DataSource = typeof(SistemaDeVentas.Models.Producto);
+            // 
+            // productoIdDataGridViewTextBoxColumn
+            // 
+            productoIdDataGridViewTextBoxColumn.DataPropertyName = "ProductoId";
+            productoIdDataGridViewTextBoxColumn.HeaderText = "ProductoId";
+            productoIdDataGridViewTextBoxColumn.MinimumWidth = 6;
+            productoIdDataGridViewTextBoxColumn.Name = "productoIdDataGridViewTextBoxColumn";
+            productoIdDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // nombreDataGridViewTextBoxColumn
+            // 
+            nombreDataGridViewTextBoxColumn.DataPropertyName = "Nombre";
+            nombreDataGridViewTextBoxColumn.HeaderText = "Nombre";
+            nombreDataGridViewTextBoxColumn.MinimumWidth = 6;
+            nombreDataGridViewTextBoxColumn.Name = "nombreDataGridViewTextBoxColumn";
+            nombreDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // sKUDataGridViewTextBoxColumn
+            // 
+            sKUDataGridViewTextBoxColumn.DataPropertyName = "SKU";
+            sKUDataGridViewTextBoxColumn.HeaderText = "SKU";
+            sKUDataGridViewTextBoxColumn.MinimumWidth = 6;
+            sKUDataGridViewTextBoxColumn.Name = "sKUDataGridViewTextBoxColumn";
+            sKUDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // precioDataGridViewTextBoxColumn
+            // 
+            precioDataGridViewTextBoxColumn.DataPropertyName = "Precio";
+            precioDataGridViewTextBoxColumn.HeaderText = "Precio";
+            precioDataGridViewTextBoxColumn.MinimumWidth = 6;
+            precioDataGridViewTextBoxColumn.Name = "precioDataGridViewTextBoxColumn";
+            precioDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // costoDataGridViewTextBoxColumn
+            // 
+            costoDataGridViewTextBoxColumn.DataPropertyName = "Costo";
+            costoDataGridViewTextBoxColumn.HeaderText = "Costo";
+            costoDataGridViewTextBoxColumn.MinimumWidth = 6;
+            costoDataGridViewTextBoxColumn.Name = "costoDataGridViewTextBoxColumn";
+            costoDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // stockDataGridViewTextBoxColumn
+            // 
+            stockDataGridViewTextBoxColumn.DataPropertyName = "Stock";
+            stockDataGridViewTextBoxColumn.HeaderText = "Stock";
+            stockDataGridViewTextBoxColumn.MinimumWidth = 6;
+            stockDataGridViewTextBoxColumn.Name = "stockDataGridViewTextBoxColumn";
+            stockDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // categoriaDataGridViewTextBoxColumn
+            // 
+            categoriaDataGridViewTextBoxColumn.DataPropertyName = "Categoria";
+            categoriaDataGridViewTextBoxColumn.HeaderText = "Categoria";
+            categoriaDataGridViewTextBoxColumn.MinimumWidth = 6;
+            categoriaDataGridViewTextBoxColumn.Name = "categoriaDataGridViewTextBoxColumn";
+            categoriaDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // proveedorIdDataGridViewTextBoxColumn
+            // 
+            proveedorIdDataGridViewTextBoxColumn.DataPropertyName = "ProveedorId";
+            proveedorIdDataGridViewTextBoxColumn.HeaderText = "ProveedorId";
+            proveedorIdDataGridViewTextBoxColumn.MinimumWidth = 6;
+            proveedorIdDataGridViewTextBoxColumn.Name = "proveedorIdDataGridViewTextBoxColumn";
+            proveedorIdDataGridViewTextBoxColumn.Width = 125;
+            // 
+            // proveedorDataGridViewTextBoxColumn
+            // 
+            proveedorDataGridViewTextBoxColumn.DataPropertyName = "Proveedor";
+            proveedorDataGridViewTextBoxColumn.HeaderText = "Proveedor";
+            proveedorDataGridViewTextBoxColumn.MinimumWidth = 6;
+            proveedorDataGridViewTextBoxColumn.Name = "proveedorDataGridViewTextBoxColumn";
+            proveedorDataGridViewTextBoxColumn.Width = 125;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -334,6 +424,7 @@
             Text = "Form1";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)productoBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -365,5 +456,15 @@
         private Label label7;
         private ComboBox cmbProveedores;
         private Label label8;
+        private DataGridViewTextBoxColumn productoIdDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn nombreDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn sKUDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn precioDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn costoDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn stockDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn categoriaDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn proveedorIdDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn proveedorDataGridViewTextBoxColumn;
+        private BindingSource productoBindingSource;
     }
 }

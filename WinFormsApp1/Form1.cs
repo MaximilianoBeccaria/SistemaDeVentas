@@ -232,11 +232,6 @@ namespace WinFormsApp1
 
         private void dgvProductos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
-        }
-
-        private void dgvProductos_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
             if (dgvProductos.CurrentRow != null)
             {
 
@@ -244,6 +239,15 @@ namespace WinFormsApp1
                 txtPrecio.Text = dgvProductos.CurrentRow.Cells["Precio"].Value.ToString();
                 txtStock.Text = dgvProductos.CurrentRow.Cells["Stock"].Value.ToString();
                 SKUProducto.Text = dgvProductos.CurrentRow.Cells["SKU"].Value.ToString();
+            }
+        }
+        
+
+        private void dgvProductos_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvProductos.CurrentRow != null)
+            {
+
             }
         }
 
@@ -281,10 +285,22 @@ namespace WinFormsApp1
 
             cmbProveedores.DataSource = proveedores;
             cmbProveedores.DisplayMember = "Nombre";       
-            cmbProveedores.ValueMember = "ProveedorId";   
+            cmbProveedores.ValueMember = "ProveedorId";
+
+
+            dgvProductos.AutoGenerateColumns = false;
+
+            dgvProductos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Categoría",
+                DataPropertyName = "Categoria", 
+                Name = "Categoria"              
+            });
+
+
         }
 
-        
+
 
 
         private void label6_Click(object sender, EventArgs e)

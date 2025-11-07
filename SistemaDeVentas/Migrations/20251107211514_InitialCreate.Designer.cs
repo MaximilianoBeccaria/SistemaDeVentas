@@ -12,8 +12,8 @@ using SistemaDeVentas.Data;
 namespace SistemaDeVentas.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251103220416_versionfinal2")]
-    partial class versionfinal2
+    [Migration("20251107211514_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,22 +56,31 @@ namespace SistemaDeVentas.Migrations
 
             modelBuilder.Entity("SistemaDeVentas.Models.DetalleOrden", b =>
                 {
-                    b.Property<int>("OrdenId")
+                    b.Property<int>("DetalleOrdenId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleOrdenId"));
 
                     b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrdenId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("Subtotal")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
 
-                    b.HasKey("OrdenId", "ProductoId");
+                    b.HasKey("DetalleOrdenId");
+
+                    b.HasIndex("OrdenId");
 
                     b.HasIndex("ProductoId");
 
@@ -86,7 +95,7 @@ namespace SistemaDeVentas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrdenId"));
 
-                    b.Property<int>("ClienteId")
+                    b.Property<int?>("ClienteIdCliente")
                         .HasColumnType("int");
 
                     b.Property<string>("Estado")
@@ -96,12 +105,12 @@ namespace SistemaDeVentas.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("IdCliente")
+                        .HasColumnType("int");
 
                     b.HasKey("OrdenId");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ClienteIdCliente");
 
                     b.ToTable("Orden");
                 });
@@ -173,7 +182,7 @@ namespace SistemaDeVentas.Migrations
             modelBuilder.Entity("SistemaDeVentas.Models.DetalleOrden", b =>
                 {
                     b.HasOne("SistemaDeVentas.Models.Orden", null)
-                        .WithMany("Detalles")
+                        .WithMany("DetallesOrden")
                         .HasForeignKey("OrdenId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -187,13 +196,9 @@ namespace SistemaDeVentas.Migrations
 
             modelBuilder.Entity("SistemaDeVentas.Models.Orden", b =>
                 {
-                    b.HasOne("SistemaDeVentas.Models.Cliente", "Cliente")
+                    b.HasOne("SistemaDeVentas.Models.Cliente", null)
                         .WithMany("Ordenes")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
+                        .HasForeignKey("ClienteIdCliente");
                 });
 
             modelBuilder.Entity("SistemaDeVentas.Models.Producto", b =>
@@ -214,7 +219,7 @@ namespace SistemaDeVentas.Migrations
 
             modelBuilder.Entity("SistemaDeVentas.Models.Orden", b =>
                 {
-                    b.Navigation("Detalles");
+                    b.Navigation("DetallesOrden");
                 });
 
             modelBuilder.Entity("SistemaDeVentas.Models.Producto", b =>

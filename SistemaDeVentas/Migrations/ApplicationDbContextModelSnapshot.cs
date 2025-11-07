@@ -54,10 +54,10 @@ namespace SistemaDeVentas.Migrations
             modelBuilder.Entity("SistemaDeVentas.Models.DetalleOrden", b =>
                 {
                     b.Property<int>("DetalleOrdenId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleOrdenId"));
 
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
@@ -72,16 +72,14 @@ namespace SistemaDeVentas.Migrations
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductoId1")
+                    b.Property<int>("ProductoId")
                         .HasColumnType("int");
 
-                    b.HasKey("DetalleOrdenId", "ProductoId");
+                    b.HasKey("DetalleOrdenId");
 
                     b.HasIndex("OrdenId");
 
                     b.HasIndex("ProductoId");
-
-                    b.HasIndex("ProductoId1");
 
                     b.ToTable("DetalleOrden");
                 });
@@ -94,7 +92,7 @@ namespace SistemaDeVentas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrdenId"));
 
-                    b.Property<int>("ClienteIdCliente")
+                    b.Property<int?>("ClienteIdCliente")
                         .HasColumnType("int");
 
                     b.Property<string>("Estado")
@@ -182,12 +180,6 @@ namespace SistemaDeVentas.Migrations
                 {
                     b.HasOne("SistemaDeVentas.Models.Orden", null)
                         .WithMany("DetallesOrden")
-                        .HasForeignKey("DetalleOrdenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SistemaDeVentas.Models.Orden", "Orden")
-                        .WithMany()
                         .HasForeignKey("OrdenId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -197,27 +189,13 @@ namespace SistemaDeVentas.Migrations
                         .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SistemaDeVentas.Models.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Orden");
-
-                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("SistemaDeVentas.Models.Orden", b =>
                 {
-                    b.HasOne("SistemaDeVentas.Models.Cliente", "Cliente")
+                    b.HasOne("SistemaDeVentas.Models.Cliente", null)
                         .WithMany("Ordenes")
-                        .HasForeignKey("ClienteIdCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
+                        .HasForeignKey("ClienteIdCliente");
                 });
 
             modelBuilder.Entity("SistemaDeVentas.Models.Producto", b =>

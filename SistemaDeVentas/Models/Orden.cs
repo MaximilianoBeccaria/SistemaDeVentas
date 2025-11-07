@@ -15,7 +15,7 @@ namespace SistemaDeVentas.Models
         public int IdCliente { get; set; }
         public string Estado { get; set; }
 
-        public Cliente Cliente { get; set; }
+
         public List<DetalleOrden> DetallesOrden { get; set; } = new();
     }
 

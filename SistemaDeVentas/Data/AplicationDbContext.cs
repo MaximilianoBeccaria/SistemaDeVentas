@@ -23,27 +23,13 @@ namespace SistemaDeVentas.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                "Server=(localdb)\\MSSQLLocalDB;Database=Grupo10;Trusted_Connection=True;TrustServerCertificate=True;"
+                "Server=(localdb)\\MSSQLLocalDB;Database=SistedeVenta;TrustServerCertificate=True;"
             );
         }
        
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<DetalleOrden>()
-                .HasKey(d => new { d.DetalleOrdenId, d.ProductoId });
-
-            modelBuilder.Entity<Orden>()
-                .HasMany(o => o.DetallesOrden)
-                .WithOne()
-                .HasForeignKey(d => d.DetalleOrdenId);
-
-            modelBuilder.Entity<Producto>()
-                .HasMany(p => p.DetallesOrden)
-                .WithOne()
-                .HasForeignKey(d => d.ProductoId);
-        }
+        
         
 
 
